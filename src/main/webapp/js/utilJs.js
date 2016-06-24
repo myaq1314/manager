@@ -290,7 +290,6 @@ function pageForward(url, param) {   // msg( arguments.length )
             }
         }
         str = str.substring(0, str.length - 1);   // 删除遍历后多添加的一个 &    // msg( url + str )
-
         window.location.href = url + str;
     }
 }

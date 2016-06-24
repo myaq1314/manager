@@ -1,19 +1,15 @@
 package com.baidu.fbu.asset.service.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import com.baidu.fbu.asset.constants.Constants;
+import com.baidu.fbu.asset.dao.AssetDetailDao;
+import com.baidu.fbu.asset.dao.AssetPlanDao;
+import com.baidu.fbu.asset.entity.vo.AssetDetailVo;
+import com.baidu.fbu.asset.service.AssetDetailService;
+import com.baidu.fbu.asset.util.ExcelUtil;
+import com.baidu.fbu.asset.util.IOUtil;
+import com.baidu.fbu.asset.util.PageUtil;
+import com.baidu.fbu.asset.util.Util;
+import com.baidu.fbu.common.service.FormatService;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -23,22 +19,26 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baidu.fbu.asset.constants.Constants;
-import com.baidu.fbu.asset.dao.AssetDetailDao;
-import com.baidu.fbu.asset.dao.AssetPlanDao;
-import com.baidu.fbu.asset.entity.AssetDetail;
-import com.baidu.fbu.asset.entity.vo.AssetDetailVo;
-import com.baidu.fbu.asset.service.AssetDetailService;
-import com.baidu.fbu.asset.util.ExcelUtil;
-import com.baidu.fbu.asset.util.IOUtil;
-import com.baidu.fbu.asset.util.PageUtil;
-import com.baidu.fbu.asset.util.Util;
-import com.baidu.fbu.common.service.FormatService;
+import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service("assetDetailService")
 @Transactional
 public class AssetDetailServiceImpl implements AssetDetailService {
-    /** log日志 */
+
+    /**
+     * log日志
+     */
     private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(AssetDetailServiceImpl.class);
 
     @Resource
@@ -47,14 +47,12 @@ public class AssetDetailServiceImpl implements AssetDetailService {
     @Resource
     private AssetPlanDao assetPlanDao;
 
-    public void add(AssetDetail assetDetail) throws SQLException {
-        assetDetail.setCreatetime(new Date());
-        assetDetail.setUpdatetime(new Date());
+    public void add(AssetDetailVo assetDetail) throws SQLException {
+        assetDetail.setCreatetime(new Date(System.currentTimeMillis()));
         assetDetailDao.addByParam(assetDetail);
     }
 
-    public void update(AssetDetail assetDetail) throws SQLException {
-        assetDetail.setUpdatetime(new Date());
+    public void update(AssetDetailVo assetDetail) throws SQLException {
         assetDetailDao.updateByParam(assetDetail);
     }
 
@@ -62,24 +60,30 @@ public class AssetDetailServiceImpl implements AssetDetailService {
         assetDetailDao.deleteById(id);
     }
 
-    public AssetDetail findById(Long id) throws SQLException {
-        return (AssetDetail) assetDetailDao.findById(id);
+    public AssetDetailVo findById(Long id) throws SQLException {
+        return (AssetDetailVo) assetDetailDao.findById(id);
     }
 
-    /** 查询符合条件的记录的条数 */
-    public Long countByParam(AssetDetail assetDetail) throws SQLException {
+    /**
+     * 查询符合条件的记录的条数
+     */
+    public Long countByParam(AssetDetailVo assetDetail) throws SQLException {
         Map<String, Object> map = IOUtil.beanToMap(assetDetail);
         return assetDetailDao.countByParam(map);
     }
 
-    /** 查询所有符合条件的记录 */
-    public Map<String, Object> findByParam(AssetDetail assetDetail) throws SQLException {
+    /**
+     * 查询所有符合条件的记录
+     */
+    public Map<String, Object> findByParam(AssetDetailVo assetDetail) throws SQLException {
         // 传递参数 0, 0 表示 查询全部结果；分页查询时，startRow 默认是 0，pageSize 默认是一个正整数
         return findByParam(assetDetail, 0, 0);
     }
 
-    /** 查询符合条件的记录，分页 */
-    public Map<String, Object> findByParam(AssetDetail assetDetail, int startRow, int pageSize) throws SQLException {
+    /**
+     * 查询符合条件的记录，分页
+     */
+    public Map<String, Object> findByParam(AssetDetailVo assetDetail, int startRow, int pageSize) throws SQLException {
         Map<String, Object> map = IOUtil.beanToMap(assetDetail);
 
         String ids = assetDetail.getRepayStatusStr();
@@ -128,11 +132,13 @@ public class AssetDetailServiceImpl implements AssetDetailService {
     public Map<String, Object> sumInterestInquiry(Long apId) {
         Map<String, Object> map = assetDetailDao.sumInterestInquiry(apId);
         // 格式化 金额的单位 为 万元
-        IOUtil.formatMoney( map );
+        IOUtil.formatMoney(map);
         return map;
     }
 
-    /** 批量为 资产计划 添加 资产 */
+    /**
+     * 批量为 资产计划 添加 资产
+     */
     public void batchAddAssetDetailToAssetPlan(String ids, Long apId) {
         List<Object> loanIdList = Util.idsStringToList(ids);
 
@@ -140,12 +146,13 @@ public class AssetDetailServiceImpl implements AssetDetailService {
         map.put("loanIdList", loanIdList);
         map.put("apId", apId);
         map.put("transferStatus", 1); // 更新 资产明细的状态 0 = 未转让 1 = 待转让 2 = 已转让
-        map.put("updatetime", new Date());
         assetDetailDao.batchUpdateAssetDetailByParam(map);
     }
 
-    /** 查询所有符合条件的 loanId */
-    public List<Object> findLoanIdByParam(AssetDetail assetDetail) throws SQLException {
+    /**
+     * 查询所有符合条件的 loanId
+     */
+    public List<Object> findLoanIdByParam(AssetDetailVo assetDetail) throws SQLException {
         Map<String, Object> map = IOUtil.beanToMap(assetDetail);
 
         String ids = assetDetail.getRepayStatusStr();
@@ -163,39 +170,42 @@ public class AssetDetailServiceImpl implements AssetDetailService {
             }
         }
 
-        return (List<Object>) assetDetailDao.findLoanIdByParam( map );
+        return (List<Object>) assetDetailDao.findLoanIdByParam(map);
     }
 
-    /** 将符合条件的全部 AssetDetail 添加到 AssetPlan */
-    public void addAllAssetDetailToAssetPlan(AssetDetail assetDetail, Long apIdParam) throws SQLException {
+    /**
+     * 将符合条件的全部 AssetDetail 添加到 AssetPlan
+     */
+    public void addAllAssetDetailToAssetPlan(AssetDetailVo assetDetail, Long apIdParam) throws SQLException {
         List<Object> loanIdList = findLoanIdByParam(assetDetail);
 
         Map<String, Object> map = Util.getHashMap();
         map.put("loanIdList", loanIdList);
         map.put("apId", apIdParam);
         map.put("transferStatus", 1);    // 更新 资产明细的状态       0 = 未转让  1 = 待转让   2 = 已转让
-        map.put("updatetime", new Date());
         assetDetailDao.batchUpdateAssetDetailByParam(map);
     }
 
-    /** 删除 资产计划 中的 资产 */
-    public void deleteAssetDetailInAssetPlan(AssetDetail assetDetail) throws SQLException {
+    /**
+     * 删除 资产计划 中的 资产
+     */
+    public void deleteAssetDetailInAssetPlan(AssetDetailVo assetDetail) throws SQLException {
         assetDetail.setApId(0L);
         assetDetail.setTransferStatus((short) 0); // 更新 资产明细的状态 0 = 未转让 1 = 待转让 2 = 已转让
-        assetDetail.setUpdatetime(new Date());
         assetDetailDao.updateByParam(assetDetail);
     }
 
-    /** 删除 AssetPlan 中所有的 AssetDetail */
-    public void deleteAllAssetDetailInAssetPlan(AssetDetail assetDetail) throws SQLException {
+    /**
+     * 删除 AssetPlan 中所有的 AssetDetail
+     */
+    public void deleteAllAssetDetailInAssetPlan(AssetDetailVo assetDetail) throws SQLException {
         Map<String, Object> map = Util.getHashMap();
         map.put("transferStatus", 0);          // 更新 资产明细的状态 0 = 未转让 1 = 待转让 2 = 已转让
         map.put("apId", assetDetail.getApId());
-        map.put("updatetime", new Date());
         assetDetailDao.batchUpdateAssetDetailByAssetPlanId(map);
     }
 
-    public Map<String, Object> findByParamWithSumInfo(AssetDetail assetDetail, int startRow, int pageSize)
+    public Map<String, Object> findByParamWithSumInfo(AssetDetailVo assetDetail, int startRow, int pageSize)
             throws SQLException {
         Map<String, Object> resultMap = findByParam(assetDetail, startRow, pageSize);
 
@@ -212,7 +222,7 @@ public class AssetDetailServiceImpl implements AssetDetailService {
         Map<String, Object> result = Util.getHashMap();
 
         if (id != null) {
-            AssetDetail assetDetail = (AssetDetail) assetDetailDao.findById(id);
+            AssetDetailVo assetDetail = (AssetDetailVo) assetDetailDao.findById(id);
             result.put("assetDetail", assetDetail);
         }
         result.put("ProductTypes", Constants.getProductTypes());
@@ -220,7 +230,9 @@ public class AssetDetailServiceImpl implements AssetDetailService {
         return result;
     }
 
-    /** 批量删除 资产计划 中的 资产 */
+    /**
+     * 批量删除 资产计划 中的 资产
+     */
     public void batchDeleteAssetDetailInAssetPlan(String ids) {
         List<Object> loanIdList = Util.idsStringToList(ids);
 
@@ -228,7 +240,6 @@ public class AssetDetailServiceImpl implements AssetDetailService {
         map.put("loanIdList", loanIdList);
         map.put("apId", 0L);
         map.put("transferStatus", 0); // 更新 资产明细的状态 1 = 待转让 2 = 已转让 0 = 未转让
-        map.put("updatetime", new Date());
         assetDetailDao.batchUpdateAssetDetailByParam(map);
     }
 
@@ -257,7 +268,7 @@ public class AssetDetailServiceImpl implements AssetDetailService {
             String loanIdOfAssetToBuy = (String) decideToBuy.get(j);
 
             for (int i = 0; i < assets.size(); i++) {
-                AssetDetail asset = (AssetDetail) assets.get(i);
+                AssetDetailVo asset = (AssetDetailVo) assets.get(i);
                 // Util.print(asset.getLoanId() + "  ---- " + loanIdOfAssetToBuy);
                 if (loanIdOfAssetToBuy.equals(asset.getLoanId())) {
                     existFlag = true;
@@ -275,7 +286,6 @@ public class AssetDetailServiceImpl implements AssetDetailService {
         map.put("loanIdList", decideToBuy); // loanIdList 是资产管理人要购买的资产的借据号的集合
         map.put("apId", apId);
         map.put("transferStatus", 2); // 更新 资产明细的状态 2 = 已转让 0 = 未转让 1 = 待转让
-        map.put("updatetime", new Date());
 
         assetDetailDao.batchUpdateAssetDetailByLoanIds(map);
 
@@ -283,7 +293,7 @@ public class AssetDetailServiceImpl implements AssetDetailService {
         assetDetailDao.removeAssetDetailsNotBuyInAnAssetPlan(map);
     }
 
-    public HSSFWorkbook generateAssetToExcel(AssetDetail assetDetail) {
+    public HSSFWorkbook generateAssetToExcel(AssetDetailVo assetDetail) {
         List<AssetDetailVo> list = new ArrayList<AssetDetailVo>();
         HSSFWorkbook listToExcel = null;
         try {
@@ -295,7 +305,9 @@ public class AssetDetailServiceImpl implements AssetDetailService {
         return listToExcel;
     }
 
-    /** 导入借据到数据库 */
+    /**
+     * 导入借据到数据库
+     */
     public int excelInAsset(Long apId, File f) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("apId", apId); // 管理计划ID
@@ -310,7 +322,7 @@ public class AssetDetailServiceImpl implements AssetDetailService {
                     Integer buyOrNotNum = null; // 是否购买 一项 所在列下标
                     Integer loanIdNum = null; // 借据号 一项 所在列下标
                     // 根据名称获取目标项所在 列下标，防止用户修改目标列位置
-                abc:
+                    abc:
                     for (int j = 0; j < titleRow.getPhysicalNumberOfCells(); j++) { // 循环获取 目标项 所在列下标
                         HSSFCell cell = titleRow.getCell(j); // 获取标题行 每一单元格
                         if (cell != null) {
@@ -354,7 +366,7 @@ public class AssetDetailServiceImpl implements AssetDetailService {
                                 paramMap.put("loanId", loanId);
                                 try {
                                     checkResult = assetDetailDao.checkLoanId(paramMap); // 检查当前loan_id数据库中是否存在,检查这条loan_id
-                                                                                        // 是否属于这个计划
+                                    // 是否属于这个计划
                                 } catch (DataAccessException e) {
                                     LOG.error("查询数据库表tbl_asset_detail失败", e);
                                 }
@@ -379,7 +391,6 @@ public class AssetDetailServiceImpl implements AssetDetailService {
                                         checkResult.remove("surplus_amount");
                                         checkResult.remove("surplus_fee");
                                         checkResult.put("ap_id", paramMap.get("apId").toString());
-                                        checkResult.put("updatetime", new Date());
                                         try {
                                             assetDetailDao.updateTransferPrincipalInterest(checkResult);
                                         } catch (DataAccessException e) {
@@ -402,7 +413,7 @@ public class AssetDetailServiceImpl implements AssetDetailService {
                                 paramMap.put("loanId", loanId);
                                 try {
                                     checkResult = assetDetailDao.checkLoanId(paramMap); // 检查当前loan_id数据库中是否存在,检查这条loan_id
-                                                                                        // 是否属于这个计划
+                                    // 是否属于这个计划
                                 } catch (DataAccessException e) {
                                     LOG.error("查询数据库表tbl_asset_detail失败", e);
                                 }
@@ -414,7 +425,6 @@ public class AssetDetailServiceImpl implements AssetDetailService {
                                     checkResult.remove("surplus_principal_amount");
                                     checkResult.remove("surplus_amount");
                                     checkResult.remove("surplus_fee");
-                                    checkResult.put("updatetime", new Date());
                                     checkResult.put("ap_id", "");
                                     try {
                                         assetDetailDao.updateTransferPrincipalInterest(checkResult);

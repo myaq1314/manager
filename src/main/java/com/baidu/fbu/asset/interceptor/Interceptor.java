@@ -3,27 +3,30 @@
  */
 package com.baidu.fbu.asset.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.baidu.fbu.common.service.CacheService;
+import com.baidu.fbu.common.service.FormatService;
+import com.baidu.fbu.common.service.FormatService.LOGSTEP;
+import com.baidu.fbu.common.util.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.baidu.fbu.common.service.CacheService;
-import com.baidu.fbu.common.service.FormatService;
-import com.baidu.fbu.common.service.FormatService.LOGSTEP;
-import com.baidu.fbu.common.util.RequestUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-/** controller拦截器 */
+/**
+ * controller拦截器
+ */
 public class Interceptor implements HandlerInterceptor {
 
-    /**  log     */
+    /**
+     * log
+     */
     private static final Logger LOG = LoggerFactory.getLogger(Interceptor.class);
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-            Object handler, Exception ex) throws Exception {
+                                Object handler, Exception ex) throws Exception {
         // UUAP跨域访问
         response.setHeader("Access-Control-Allow-Origin", "*");
         // 请求返回状态设置，可设置成功，失败，默认，可选
@@ -35,7 +38,7 @@ public class Interceptor implements HandlerInterceptor {
     }
 
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-            ModelAndView modelAndView) throws Exception {
+                           ModelAndView modelAndView) throws Exception {
         // UUAP 跨域访问
         response.setHeader("Access-Control-Allow-Origin", "*");
     }

@@ -1,17 +1,20 @@
-/**  Copyright (C) 2015 Baidu, Inc. All Rights Reserved. */
+/**
+ * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
+ */
 package com.baidu.fbu.asset.constants;
+
+import com.baidu.fbu.asset.util.DesUtils;
+import com.baidu.fbu.asset.util.Util;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.springframework.beans.factory.annotation.Value;
-
-import com.baidu.fbu.asset.util.DesUtils;
-import com.baidu.fbu.asset.util.Util;
-
-/** 资产管理 的 常量类 */
+/**
+ * 资产管理 的 常量类
+ */
 public class Constants {
-    @Value( "${mis.asset}" )
+    @Value("${mis.asset}")
     private String misAsset;
 
     @Value("${mis.checkurl}")
@@ -29,19 +32,21 @@ public class Constants {
         public static String MIS_GETINFOURL;
         public static String MIS_SIGN;
 
-        private static void init( String misAsset, String misCheckurl, String misGetinfourl, String misSign) {
+        private static void init(String misAsset, String misCheckurl, String misGetinfourl, String misSign) {
             MIS_ASSET = misAsset;
             MIS_CHECKURL = misCheckurl;
             MIS_GETINFOURL = misGetinfourl;
-            MIS_SIGN = DesUtils.decrypt( misSign );
+            MIS_SIGN = DesUtils.decrypt(misSign);
         }
     }
 
     private void init() {
-        Base.init( misAsset, misCheckurl, misGetinfourl, misSign );
+        Base.init(misAsset, misCheckurl, misGetinfourl, misSign);
     }
 
-    /** 返回码     */
+    /**
+     * 返回码
+     */
     public static class ResultCode {
         public static final String[] ERR_MSG = {
                 "success", // 00
@@ -113,17 +118,14 @@ public class Constants {
         pt4.put("name", "度贴吧");
         pt4.put("id", "BTB");
 
-        productTypes.add( pt1 );
-        productTypes.add( pt2 );
-        productTypes.add( pt3 );
-        productTypes.add( pt4 );
+        productTypes.add(pt1);
+        productTypes.add(pt2);
+        productTypes.add(pt3);
+        productTypes.add(pt4);
     }
 
     public static ArrayList<Object> getProductTypes() {
         return productTypes;
     }
-
-
-
 
 }

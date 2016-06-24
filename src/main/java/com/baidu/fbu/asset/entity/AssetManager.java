@@ -3,28 +3,45 @@ package com.baidu.fbu.asset.entity;
 import java.util.Date;
 
 public class AssetManager {
-    /** id 主键 */
+
+    /**
+     * id 主键
+     */
     private Long id;
 
-    /** 资产管理人姓名 */
+    /**
+     * 资产管理人姓名
+     */
     private String name;
 
-    /** 资产管理人银行名称 */
+    /**
+     * 资产管理人银行名称
+     */
     private String bankName;
 
-    /** 资产管理人银行分行名称 */
+    /**
+     * 资产管理人银行分行名称
+     */
     private String branchBankName;
 
-    /** 资产管理人银行账号 */
+    /**
+     * 资产管理人银行账号
+     */
     private String bankCard;
 
-    /** 状态   1=已删除  2=正常 */
+    /**
+     * 状态   1=已删除  2=正常
+     */
     private Short status;
 
-    /** 创建时间 */
+    /**
+     * 创建时间
+     */
     private Date createtime;
 
-    /** 更新时间 */
+    /**
+     * 更新时间
+     */
     private Date updatetime;
 
     public Long getId() {

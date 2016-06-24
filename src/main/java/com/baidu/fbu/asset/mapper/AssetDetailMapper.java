@@ -1,33 +1,50 @@
 package com.baidu.fbu.asset.mapper;
 
+import com.baidu.fbu.asset.entity.vo.AssetDetailVo;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
-
-import com.baidu.fbu.asset.entity.AssetDetail;
-import com.baidu.fbu.asset.entity.vo.AssetDetailVo;
-
 @Component
 public interface AssetDetailMapper {
-    int insertSelective(AssetDetail assetDetail);
-    int updateSelective(AssetDetail assetDetail);
-    int deleteByPrimaryKey( Long id );
-    AssetDetail selectByPrimaryKey( Long id );
+
+    int insertSelective(AssetDetailVo assetDetail);
+
+    int updateSelective(AssetDetailVo assetDetail);
+
+    int deleteByPrimaryKey(Long id);
+
+    AssetDetailVo selectByPrimaryKey(Long id);
+
     long countSelective(Map<String, Object> map);
+
     List<Object> selectSelective(Map<String, Object> map);
+
     void batchUpdateByParam(Map<String, Object> map);
+
     void batchUpdateByRelatedId(Map<String, Object> map);
+
     void removeAssetDetailsNotBuyInAnAssetPlan(Map<String, Object> map);
+
     void batchUpdateByLoanIds(Map<String, Object> map);
-    List<AssetDetailVo> exportAssets(AssetDetail assetDetail);
+
+    List<AssetDetailVo> exportAssets(AssetDetailVo assetDetail);
+
     void updateTransferPrincipalInterest(Map<String, Object> checkResult);
+
     Map<String, Object> checkLoanId(Map<String, Object> paramMap);
+
     long joinCountSelective(Map<String, Object> map);
+
     List<Object> joinSelectSelective(Map<String, Object> map);
+
     Map<String, Object> sumInterestInquiry(Long apId);
+
     void deleteApId(Map<String, String> paramMap);
+
     void deleteApIdBatch(Map<String, String> paramMap);
-    List<Object> findLoanIdByParam( Map<String, Object> map );
+
+    List<Object> findLoanIdByParam(Map<String, Object> map);
 
 }

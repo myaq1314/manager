@@ -1,50 +1,77 @@
 package com.baidu.fbu.asset.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class AssetPlan {
-    /** id 主键 */
+
+    /**
+     * id 主键
+     */
     private Long id;
 
-    /** 合同号 */
+    /**
+     * 合同号
+     */
     private String dealId;
 
-    /** 资产管理人 id */
+    /**
+     * 资产管理人 id
+     */
     private Long amId;
 
-    /** 计划状态     0=待发行   1=已发行  2=撤销 */
+    /**
+     * 计划状态     0=待发行   1=已发行  2=撤销
+     */
     private Short planStatus;
 
-    /** 资产管理计划名称 */
+    /**
+     * 资产管理计划名称
+     */
     private String name;
 
-    /** 资产管理协议号 */
+    /**
+     * 资产管理协议号
+     */
     private String protocol;
 
-    /** 合同资产总额 (元)，需要在 java 中转换为以万元为单位 */
+    /**
+     * 合同资产总额 (元)，需要在 java 中转换为以万元为单位
+     */
     private BigDecimal totalAmount;
 
-    /** 实际入池资产总额 (元)，需要在 java 中转换为以万元为单位 */
+    /**
+     * 实际入池资产总额 (元)，需要在 java 中转换为以万元为单位
+     */
     private BigDecimal actualAmount;
 
-    /** 交割日期 */
+    /**
+     * 交割日期
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date handoverDate;
 
-    /** 发行日期 */
+    /**
+     * 发行日期
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publishDate;
 
-    /** 资产管理人的姓名  条件查询的辅助参数   */
+    /**
+     * 资产管理人的姓名  条件查询的辅助参数
+     */
     private String assetManagerName;
 
-    /** 创建时间 */
+    /**
+     * 创建时间
+     */
     private Date createtime;
 
-    /** 更新时间 */
+    /**
+     * 更新时间
+     */
     private Date updatetime;
 
     public Long getId() {

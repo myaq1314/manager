@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title></title>
+<title>为资产计划添加资产</title>
 <script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="../../js/utilJs.js"></script>
 <script type="text/javascript" src="../../third/js/date/WdatePicker.js"></script>
@@ -51,10 +51,17 @@ $(function () {
     // 获取传递到页面的关联参数
     var str = window.location + '';   // alert( str );
     var arr = str.split('?id=');
-    jsGet("apIdForAddToRelatedAssetPlan").value = arr[1];   // alert( arr[1] );
-    jsGet("transferStatus").value = 0;
+    if (arr[1] == undefined || arr[1] == null) {
+        jsGet("transferStatus").value = -1;
 
-    jqGet("viewLink").attr('href', '/page/assetdetail/findRelatedAssetDetail.html?id=' + arr[1]);
+//        jqGet("viewLink").attr('href', '/page/assetdetail/findRelatedAssetDetail.html');
+    }
+    else {
+        jsGet("apIdForAddToRelatedAssetPlan").value = arr[1];   // alert( arr[1] );
+        jsGet("transferStatus").value = 0;
+        jqGet("viewLink").attr('href', '/page/assetdetail/findRelatedAssetDetail.html?id=' + arr[1]);
+    }
+
 
     // 查询 AssetDetail 的相关信息
     ajaxSubmitOfFindAssetDetailWithRelatedInfo();
@@ -172,7 +179,15 @@ function ajaxSubmitOfFindRelatedAssetDetail(isPagerSearch) {
         theAjaxSubmit(url, param, callbackFunctionName);
     }
 }
-
+function btnFrom() {
+    var str = window.location + '';   // alert( str );
+    var arr = str.split('?id=');
+    if (arr[1] == undefined || arr[1] == null) {
+        $('.button-two').css('display', 'none');
+        $('.tap-title font').html('查询所有资产');
+        $('#viewLink').hide();
+    }
+}
 // 提交条件查询 成功的回调函数
 function successCallbackOfFindRelatedAssetDetail(obj){      //printObject( obj );
     if(obj.message == "success") {
@@ -185,6 +200,7 @@ function successCallbackOfFindRelatedAssetDetail(obj){      //printObject( obj )
             jqGet("addButton").show();
             jqGet("addAllButton").show();
 
+            btnFrom();
             // 列表的表头 参数
             var listTitleParam = {};
             put(listTitleParam, 'loanId', '借据号');

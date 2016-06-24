@@ -1,64 +1,58 @@
 package com.baidu.fbu.asset.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class AssetStageDetail {
-    /** id 主键 */
     private Long id;
 
-    /** 借据号 */
-    private String loanId;
+    private Long loanId;
 
-    /** 分期数 */
-    private Short stageNo;
+    private Integer loanScheduleNo;
 
-    /** 还款状态   N=正常(已过账单日，未逾期)  Y=结清  O=逾期   未到期(未到账单日) */
-    private String repaymentStatus;
+    private Integer status;
 
-    /** 到期日 (分期还款日) */
-    private Date ippDueDate;
+    private Date dueDate;
 
-    /** 实际还款日 */
-    private Date repaymentDate;
-
-    /** 分期产品类型 */
     private String productType;
 
-    /** 当期应还金额 */
-    private BigDecimal amount;
+    private Long amount;
 
-    /** 当期应还本金 */
-    private BigDecimal principal;
+    private Long amountRepay;
 
-    /** 当期应还费用 */
-    private BigDecimal cost;
+    private Long principal;
 
-    /** 当期应还利息 */
-    private BigDecimal interest;
+    private Long principalRepay;
 
-    /** 罚息 */
-    private BigDecimal penalty;
+    private Long interest;
 
-    /** 还款总额 */
-    private BigDecimal paymentAmt;
+    private Long interestRepay;
 
-    /** 还款本金 */
-    private BigDecimal pmtPrincipalAmt;
+    private Long charges;
 
-    /** 还款费用 */
-    private BigDecimal pmtFeeAmt;
+    private Long chargesRepay;
 
-    /** 还款利息 */
-    private BigDecimal pmtIntAmt;
+    private Long penalty;
 
-    /** 已还罚息 */
-    private BigDecimal repayPenalty;
+    private Long penaltyRepay;
 
-    /** 创建时间 */
+    private Long overdue;
+
+    private Long overdueRepay;
+
+    private Long violate;
+
+    private Long violateRepay;
+
+    private Long management;
+
+    private Long managementRepay;
+
+    private Long service;
+
+    private Long serviceRepay;
+
     private Date createtime;
 
-    /** 更新时间 */
     private Date updatetime;
 
     public Long getId() {
@@ -69,44 +63,36 @@ public class AssetStageDetail {
         this.id = id;
     }
 
-    public String getLoanId() {
+    public Long getLoanId() {
         return loanId;
     }
 
-    public void setLoanId(String loanId) {
+    public void setLoanId(Long loanId) {
         this.loanId = loanId;
     }
 
-    public Short getStageNo() {
-        return stageNo;
+    public Integer getLoanScheduleNo() {
+        return loanScheduleNo;
     }
 
-    public void setStageNo(Short stageNo) {
-        this.stageNo = stageNo;
+    public void setLoanScheduleNo(Integer loanScheduleNo) {
+        this.loanScheduleNo = loanScheduleNo;
     }
 
-    public String getRepaymentStatus() {
-        return repaymentStatus;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setRepaymentStatus(String repaymentStatus) {
-        this.repaymentStatus = repaymentStatus;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public Date getIppDueDate() {
-        return ippDueDate;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public void setIppDueDate(Date ippDueDate) {
-        this.ippDueDate = ippDueDate;
-    }
-
-    public Date getRepaymentDate() {
-        return repaymentDate;
-    }
-
-    public void setRepaymentDate(Date repaymentDate) {
-        this.repaymentDate = repaymentDate;
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public String getProductType() {
@@ -114,87 +100,151 @@ public class AssetStageDetail {
     }
 
     public void setProductType(String productType) {
-        this.productType = productType;
+        this.productType = productType == null ? null : productType.trim();
     }
 
-    public BigDecimal getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 
-    public BigDecimal getPrincipal() {
+    public Long getAmountRepay() {
+        return amountRepay;
+    }
+
+    public void setAmountRepay(Long amountRepay) {
+        this.amountRepay = amountRepay;
+    }
+
+    public Long getPrincipal() {
         return principal;
     }
 
-    public void setPrincipal(BigDecimal principal) {
+    public void setPrincipal(Long principal) {
         this.principal = principal;
     }
 
-    public BigDecimal getCost() {
-        return cost;
+    public Long getPrincipalRepay() {
+        return principalRepay;
     }
 
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
+    public void setPrincipalRepay(Long principalRepay) {
+        this.principalRepay = principalRepay;
     }
 
-    public BigDecimal getInterest() {
+    public Long getInterest() {
         return interest;
     }
 
-    public void setInterest(BigDecimal interest) {
+    public void setInterest(Long interest) {
         this.interest = interest;
     }
 
-    public BigDecimal getPenalty() {
+    public Long getInterestRepay() {
+        return interestRepay;
+    }
+
+    public void setInterestRepay(Long interestRepay) {
+        this.interestRepay = interestRepay;
+    }
+
+    public Long getCharges() {
+        return charges;
+    }
+
+    public void setCharges(Long charges) {
+        this.charges = charges;
+    }
+
+    public Long getChargesRepay() {
+        return chargesRepay;
+    }
+
+    public void setChargesRepay(Long chargesRepay) {
+        this.chargesRepay = chargesRepay;
+    }
+
+    public Long getPenalty() {
         return penalty;
     }
 
-    public void setPenalty(BigDecimal penalty) {
+    public void setPenalty(Long penalty) {
         this.penalty = penalty;
     }
 
-    public BigDecimal getPaymentAmt() {
-        return paymentAmt;
+    public Long getPenaltyRepay() {
+        return penaltyRepay;
     }
 
-    public void setPaymentAmt(BigDecimal paymentAmt) {
-        this.paymentAmt = paymentAmt;
+    public void setPenaltyRepay(Long penaltyRepay) {
+        this.penaltyRepay = penaltyRepay;
     }
 
-    public BigDecimal getPmtPrincipalAmt() {
-        return pmtPrincipalAmt;
+    public Long getOverdue() {
+        return overdue;
     }
 
-    public void setPmtPrincipalAmt(BigDecimal pmtPrincipalAmt) {
-        this.pmtPrincipalAmt = pmtPrincipalAmt;
+    public void setOverdue(Long overdue) {
+        this.overdue = overdue;
     }
 
-    public BigDecimal getPmtFeeAmt() {
-        return pmtFeeAmt;
+    public Long getOverdueRepay() {
+        return overdueRepay;
     }
 
-    public void setPmtFeeAmt(BigDecimal pmtFeeAmt) {
-        this.pmtFeeAmt = pmtFeeAmt;
+    public void setOverdueRepay(Long overdueRepay) {
+        this.overdueRepay = overdueRepay;
     }
 
-    public BigDecimal getPmtIntAmt() {
-        return pmtIntAmt;
+    public Long getViolate() {
+        return violate;
     }
 
-    public void setPmtIntAmt(BigDecimal pmtIntAmt) {
-        this.pmtIntAmt = pmtIntAmt;
+    public void setViolate(Long violate) {
+        this.violate = violate;
     }
 
-    public BigDecimal getRepayPenalty() {
-        return repayPenalty;
+    public Long getViolateRepay() {
+        return violateRepay;
     }
 
-    public void setRepayPenalty(BigDecimal repayPenalty) {
-        this.repayPenalty = repayPenalty;
+    public void setViolateRepay(Long violateRepay) {
+        this.violateRepay = violateRepay;
+    }
+
+    public Long getManagement() {
+        return management;
+    }
+
+    public void setManagement(Long management) {
+        this.management = management;
+    }
+
+    public Long getManagementRepay() {
+        return managementRepay;
+    }
+
+    public void setManagementRepay(Long managementRepay) {
+        this.managementRepay = managementRepay;
+    }
+
+    public Long getService() {
+        return service;
+    }
+
+    public void setService(Long service) {
+        this.service = service;
+    }
+
+    public Long getServiceRepay() {
+        return serviceRepay;
+    }
+
+    public void setServiceRepay(Long serviceRepay) {
+        this.serviceRepay = serviceRepay;
     }
 
     public Date getCreatetime() {

@@ -2,13 +2,20 @@
 <html>
 <head>
 <meta charset="utf-8">
+<title>asset management</title>
 <script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../../js/utilJs.js"></script>
 <script type="text/javascript">
 $(function (){
     //alert('hello world');
-});   
+});
+function findAllAsset() {
+    var url = "/page/assetdetail/addRelatedAssetDetail.html";
+    var param = {};
+//    put(param, "id", id);
+    pageForward(url, param);
+}
 </script>
-<title>asset management</title>
 </head>
 <body>
 <center>
@@ -16,6 +23,7 @@ $(function (){
 <br><br>
 <a href="/page/assetmanager/findAssetManager.html">资产管理人 列表</a><br><br>
 <a href="/page/assetplan/findAssetPlan.html">资产计划 列表</a><br><br>
+    <a href="/page/assetdetail/addRelatedAssetDetail.html">基础资产查询</a><br><br>
 <!-- <a href="/page/assetdetail/findAssetDetail.html">资产明细 列表</a><br><br>
 <a href="/page/assetstagedetail/findAssetStageDetail.html">资产分期明细 列表</a><br><br> -->
 

@@ -3,336 +3,541 @@ package com.baidu.fbu.asset.entity.vo;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-/**
- * 用于导出资产明细excl
- * @author chuzhihao
- *
- */
 public class AssetDetailVo {
-    
-    private String loanId; // 借据号
-    private BigDecimal stageNo; // 计划分期数
-    private String productType; // 产品类型
-    private Date loanTime; // 放款时间
-    private BigDecimal creditAmount; // 授信额度
-    private BigDecimal loanRate; // 贷款利率（月）
-    private Date dueDate; // 借据最终还款日
-    private BigDecimal loanPrincipalAmount; // 贷款本息（元）
-    private BigDecimal repayPrincipalInterest; // 已还本息（元）
-    private BigDecimal surplusPrincipalAmount; // 剩余本息（元）
-    private BigDecimal transferPrincipalInterest; // 已转让本息（元）
-    private BigDecimal penaltyInterest; // 罚息
-    private BigDecimal repayPenaltyInterest; // 已还罚息
-    private Integer repayPlanChange; // 还款计划是否变更
-    private String repayType; // 还款方式
-    private Integer transferStatus; // 转让状态
-    private String customerName; // 客户姓名
-    private String customerIdcard; // 客户身份证号码
-    private Integer customerGender; // 客户性别
-    private Integer customerAge; // 客户年龄
-    private String customerDegree; // 客户学历
-    private String customerProfession; // 客户职业
-    private String customerArea; // 客户所在区域
-    private String merchantName; // 商户总公司名称
-    private String merchantBranchName; // 商户分公司名称
-    private String corpName; // 合作机构名称
-    private String guaranteeType; // 担保类型
-    private Integer overDueDay; // 累计逾期天数
-    private Integer maxOverDueDay; // 历史最高逾期天数
-    private BigDecimal historyMaxAmount; // 历史最高逾期金额
-    private BigDecimal overDuePrincipal; // 逾期本金金额
-    private BigDecimal overDueInterest; // 逾期利息金额
-    private Integer isDiscount; // 是否贴息
-    private BigDecimal discountBase; // 贴息基数
-    private BigDecimal discountRate; // 贴息比例
-    private Date amortisementDate; // 摊销期限
-    private BigDecimal amortisementCharge; // 应收摊销服务费
-    
-    private BigDecimal loanAmount; // 贷款本金
-    private BigDecimal loanFee; // 贷款费用
-    private BigDecimal repayAmount; // 已还本金
-    private BigDecimal repayFee; // 已还费用
-    private BigDecimal transferredAmount; // 已转让本金
-    private BigDecimal transferredFee; // 已转让费用
-    private BigDecimal surplusAmount; // 剩余本金
-    private BigDecimal surplusFee; // 剩余费用
-    private String repayStatus; // 借据状态
-    
-    public String getLoanId() {
+
+    private Long id;
+
+    private Long loanId;
+
+    private Long apId;
+
+    private Short transferStatus;
+
+    private Integer loanStatus;
+
+    private Integer installmentCount;
+
+    private BigDecimal creditAmount;
+
+    private BigDecimal loanRate;
+
+    private Date loanDate;
+
+    private Date dueDate;
+
+    private Long penalty;
+
+    private Short repayPlanChange;
+
+    private String guaranteeType;
+
+    private Integer overDueDay;
+
+    private Integer maxOverDueDay;
+
+    private Long historyMaxAmount;
+
+    private Long overDuePrincipal;
+
+    private Long overDueInterest;
+
+    private Short isDiscount;
+
+    private Long discountBase;
+
+    private Long discountRate;
+
+    private Date amortisementDate;
+
+    private BigDecimal amortisementCharge;
+
+    private String productType;
+
+    private String repayType;
+
+    private Long loanAmount;
+
+    private Long loanFee;
+
+    private Long repayAmount;
+
+    private Long repayFee;
+
+    private Long transferredAmount;
+
+    private Long transferredFee;
+
+    private Long surplusAmount;
+
+    private Long surplusFee;
+
+    private String corpId;
+
+    private Date createtime;
+
+    private Date updatetime;
+
+    private Long customerId;
+
+    private String idcard;
+
+    private String name;
+
+    private Short age;
+
+    private Short gender;
+
+    private String degree;
+
+    private String profession;
+
+    private String area;
+
+    private Byte status;
+
+    private Long merchantId;
+
+    private String bankBranchName;
+
+    /** 借据最终还款日 开始日期 条件查询用到的辅助参数  */
+    private Date startDueDate;
+
+    /** 借据最终还款日 结束日期 条件查询用到的辅助参数  */
+    private Date endDueDate;
+
+    /** 页面提交的 还款状态  条件查询用到的辅助参数 */
+    private String repayStatusStr;
+
+    /** 借据放款日期 的开始日期  条件查询用到的辅助参数  */
+    private Date startLoanTime;
+
+    /** 借据放款日期 的结束日期  条件查询用到的辅助参数  */
+    private Date endLoanTime;
+
+    /** 分期计划数  条件查询用到的辅助参数*/
+    private String stageNoStr;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getLoanId() {
         return loanId;
     }
-    public void setLoanId(String loanId) {
+
+    public void setLoanId(Long loanId) {
         this.loanId = loanId;
     }
-    public BigDecimal getStageNo() {
-        return stageNo;
+
+    public Long getApId() {
+        return apId;
     }
-    public void setStageNo(BigDecimal stageNo) {
-        this.stageNo = stageNo;
+
+    public void setApId(Long apId) {
+        this.apId = apId;
     }
-    public String getProductType() {
-        return productType;
+
+    public Short getTransferStatus() {
+        return transferStatus;
     }
-    public void setProductType(String productType) {
-        this.productType = productType;
+
+    public void setTransferStatus(Short transferStatus) {
+        this.transferStatus = transferStatus;
     }
-    public Date getLoanTime() {
-        return loanTime;
+
+    public Integer getLoanStatus() {
+        return loanStatus;
     }
-    public void setLoanTime(Date loanTime) {
-        this.loanTime = loanTime;
+
+    public void setLoanStatus(Integer loanStatus) {
+        this.loanStatus = loanStatus;
     }
+
+    public Integer getInstallmentCount() {
+        return installmentCount;
+    }
+
+    public void setInstallmentCount(Integer installmentCount) {
+        this.installmentCount = installmentCount;
+    }
+
     public BigDecimal getCreditAmount() {
         return creditAmount;
     }
+
     public void setCreditAmount(BigDecimal creditAmount) {
         this.creditAmount = creditAmount;
     }
+
     public BigDecimal getLoanRate() {
         return loanRate;
     }
+
     public void setLoanRate(BigDecimal loanRate) {
         this.loanRate = loanRate;
     }
+
+    public Date getLoanDate() {
+        return loanDate;
+    }
+
+    public void setLoanDate(Date loanDate) {
+        this.loanDate = loanDate;
+    }
+
     public Date getDueDate() {
         return dueDate;
     }
+
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
-    public BigDecimal getLoanPrincipalAmount() {
-        return loanPrincipalAmount;
+
+    public Long getPenalty() {
+        return penalty;
     }
-    public void setLoanPrincipalAmount(BigDecimal loanPrincipalAmount) {
-        this.loanPrincipalAmount = loanPrincipalAmount;
+
+    public void setPenalty(Long penalty) {
+        this.penalty = penalty;
     }
-    public BigDecimal getRepayPrincipalInterest() {
-        return repayPrincipalInterest;
-    }
-    public void setRepayPrincipalInterest(BigDecimal repayPrincipalInterest) {
-        this.repayPrincipalInterest = repayPrincipalInterest;
-    }
-    public BigDecimal getSurplusPrincipalAmount() {
-        return surplusPrincipalAmount;
-    }
-    public void setSurplusPrincipalAmount(BigDecimal surplusPrincipalAmount) {
-        this.surplusPrincipalAmount = surplusPrincipalAmount;
-    }
-    public BigDecimal getTransferPrincipalInterest() {
-        return transferPrincipalInterest;
-    }
-    public void setTransferPrincipalInterest(BigDecimal transferPrincipalInterest) {
-        this.transferPrincipalInterest = transferPrincipalInterest;
-    }
-    public BigDecimal getPenaltyInterest() {
-        return penaltyInterest;
-    }
-    public void setPenaltyInterest(BigDecimal penaltyInterest) {
-        this.penaltyInterest = penaltyInterest;
-    }
-    public BigDecimal getRepayPenaltyInterest() {
-        return repayPenaltyInterest;
-    }
-    public void setRepayPenaltyInterest(BigDecimal repayPenaltyInterest) {
-        this.repayPenaltyInterest = repayPenaltyInterest;
-    }
-    public Integer getRepayPlanChange() {
+
+    public Short getRepayPlanChange() {
         return repayPlanChange;
     }
-    public void setRepayPlanChange(Integer repayPlanChange) {
+
+    public void setRepayPlanChange(Short repayPlanChange) {
         this.repayPlanChange = repayPlanChange;
     }
-    public String getRepayType() {
-        return repayType;
-    }
-    public void setRepayType(String repayType) {
-        this.repayType = repayType;
-    }
-    public Integer getTransferStatus() {
-        return transferStatus;
-    }
-    public void setTransferStatus(Integer transferStatus) {
-        this.transferStatus = transferStatus;
-    }
-    public String getCustomerName() {
-        return customerName;
-    }
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-    public String getCustomerIdcard() {
-        return customerIdcard;
-    }
-    public void setCustomerIdcard(String customerIdcard) {
-        this.customerIdcard = customerIdcard;
-    }
-    public Integer getCustomerGender() {
-        return customerGender;
-    }
-    public void setCustomerGender(Integer customerGender) {
-        this.customerGender = customerGender;
-    }
-    public Integer getCustomerAge() {
-        return customerAge;
-    }
-    public void setCustomerAge(Integer customerAge) {
-        this.customerAge = customerAge;
-    }
-    public String getCustomerDegree() {
-        return customerDegree;
-    }
-    public void setCustomerDegree(String customerDegree) {
-        this.customerDegree = customerDegree;
-    }
-    public String getCustomerProfession() {
-        return customerProfession;
-    }
-    public void setCustomerProfession(String customerProfession) {
-        this.customerProfession = customerProfession;
-    }
-    public String getCustomerArea() {
-        return customerArea;
-    }
-    public void setCustomerArea(String customerArea) {
-        this.customerArea = customerArea;
-    }
-    public String getMerchantName() {
-        return merchantName;
-    }
-    public void setMerchantName(String merchantName) {
-        this.merchantName = merchantName;
-    }
-    public String getMerchantBranchName() {
-        return merchantBranchName;
-    }
-    public void setMerchantBranchName(String merchantBranchName) {
-        this.merchantBranchName = merchantBranchName;
-    }
-    public String getCorpName() {
-        return corpName;
-    }
-    public void setCorpName(String corpName) {
-        this.corpName = corpName;
-    }
+
     public String getGuaranteeType() {
         return guaranteeType;
     }
+
     public void setGuaranteeType(String guaranteeType) {
         this.guaranteeType = guaranteeType;
     }
+
     public Integer getOverDueDay() {
         return overDueDay;
     }
+
     public void setOverDueDay(Integer overDueDay) {
         this.overDueDay = overDueDay;
     }
+
     public Integer getMaxOverDueDay() {
         return maxOverDueDay;
     }
+
     public void setMaxOverDueDay(Integer maxOverDueDay) {
         this.maxOverDueDay = maxOverDueDay;
     }
-    public BigDecimal getHistoryMaxAmount() {
+
+    public Long getHistoryMaxAmount() {
         return historyMaxAmount;
     }
-    public void setHistoryMaxAmount(BigDecimal historyMaxAmount) {
+
+    public void setHistoryMaxAmount(Long historyMaxAmount) {
         this.historyMaxAmount = historyMaxAmount;
     }
-    public BigDecimal getOverDuePrincipal() {
+
+    public Long getOverDuePrincipal() {
         return overDuePrincipal;
     }
-    public void setOverDuePrincipal(BigDecimal overDuePrincipal) {
+
+    public void setOverDuePrincipal(Long overDuePrincipal) {
         this.overDuePrincipal = overDuePrincipal;
     }
-    public BigDecimal getOverDueInterest() {
+
+    public Long getOverDueInterest() {
         return overDueInterest;
     }
-    public void setOverDueInterest(BigDecimal overDueInterest) {
+
+    public void setOverDueInterest(Long overDueInterest) {
         this.overDueInterest = overDueInterest;
     }
-    public Integer getIsDiscount() {
+
+    public Short getIsDiscount() {
         return isDiscount;
     }
-    public void setIsDiscount(Integer isDiscount) {
+
+    public void setIsDiscount(Short isDiscount) {
         this.isDiscount = isDiscount;
     }
-    public BigDecimal getDiscountBase() {
+
+    public Long getDiscountBase() {
         return discountBase;
     }
-    public void setDiscountBase(BigDecimal discountBase) {
+
+    public void setDiscountBase(Long discountBase) {
         this.discountBase = discountBase;
     }
-    public BigDecimal getDiscountRate() {
+
+    public Long getDiscountRate() {
         return discountRate;
     }
-    public void setDiscountRate(BigDecimal discountRate) {
+
+    public void setDiscountRate(Long discountRate) {
         this.discountRate = discountRate;
     }
+
     public Date getAmortisementDate() {
         return amortisementDate;
     }
+
     public void setAmortisementDate(Date amortisementDate) {
         this.amortisementDate = amortisementDate;
     }
+
     public BigDecimal getAmortisementCharge() {
         return amortisementCharge;
     }
+
     public void setAmortisementCharge(BigDecimal amortisementCharge) {
         this.amortisementCharge = amortisementCharge;
     }
-    public BigDecimal getLoanAmount() {
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public String getRepayType() {
+        return repayType;
+    }
+
+    public void setRepayType(String repayType) {
+        this.repayType = repayType;
+    }
+
+    public Long getLoanAmount() {
         return loanAmount;
     }
-    public void setLoanAmount(BigDecimal loanAmount) {
+
+    public void setLoanAmount(Long loanAmount) {
         this.loanAmount = loanAmount;
     }
-    public BigDecimal getLoanFee() {
+
+    public Long getLoanFee() {
         return loanFee;
     }
-    public void setLoanFee(BigDecimal loanFee) {
+
+    public void setLoanFee(Long loanFee) {
         this.loanFee = loanFee;
     }
-    public BigDecimal getRepayAmount() {
+
+    public Long getRepayAmount() {
         return repayAmount;
     }
-    public void setRepayAmount(BigDecimal repayAmount) {
+
+    public void setRepayAmount(Long repayAmount) {
         this.repayAmount = repayAmount;
     }
-    public BigDecimal getRepayFee() {
+
+    public Long getRepayFee() {
         return repayFee;
     }
-    public void setRepayFee(BigDecimal repayFee) {
+
+    public void setRepayFee(Long repayFee) {
         this.repayFee = repayFee;
     }
-    public BigDecimal getTransferredAmount() {
+
+    public Long getTransferredAmount() {
         return transferredAmount;
     }
-    public void setTransferredAmount(BigDecimal transferredAmount) {
+
+    public void setTransferredAmount(Long transferredAmount) {
         this.transferredAmount = transferredAmount;
     }
-    public BigDecimal getTransferredFee() {
+
+    public Long getTransferredFee() {
         return transferredFee;
     }
-    public void setTransferredFee(BigDecimal transferredFee) {
+
+    public void setTransferredFee(Long transferredFee) {
         this.transferredFee = transferredFee;
     }
-    public BigDecimal getSurplusAmount() {
+
+    public Long getSurplusAmount() {
         return surplusAmount;
     }
-    public void setSurplusAmount(BigDecimal surplusAmount) {
+
+    public void setSurplusAmount(Long surplusAmount) {
         this.surplusAmount = surplusAmount;
     }
-    public BigDecimal getSurplusFee() {
+
+    public Long getSurplusFee() {
         return surplusFee;
     }
-    public void setSurplusFee(BigDecimal surplusFee) {
+
+    public void setSurplusFee(Long surplusFee) {
         this.surplusFee = surplusFee;
     }
-    public String getRepayStatus() {
-        return repayStatus;
+
+    public String getCorpId() {
+        return corpId;
     }
-    public void setRepayStatus(String repayStatus) {
-        this.repayStatus = repayStatus;
+
+    public void setCorpId(String corpId) {
+        this.corpId = corpId;
     }
-    
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Short getAge() {
+        return age;
+    }
+
+    public void setAge(Short age) {
+        this.age = age;
+    }
+
+    public Short getGender() {
+        return gender;
+    }
+
+    public void setGender(Short gender) {
+        this.gender = gender;
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getBankBranchName() {
+        return bankBranchName;
+    }
+
+    public void setBankBranchName(String bankBranchName) {
+        this.bankBranchName = bankBranchName;
+    }
+
+    public Date getStartDueDate() {
+        return startDueDate;
+    }
+
+    public void setStartDueDate(Date startDueDate) {
+        this.startDueDate = startDueDate;
+    }
+
+    public Date getEndDueDate() {
+        return endDueDate;
+    }
+
+    public void setEndDueDate(Date endDueDate) {
+        this.endDueDate = endDueDate;
+    }
+
+    public String getRepayStatusStr() {
+        return repayStatusStr;
+    }
+
+    public void setRepayStatusStr(String repayStatusStr) {
+        this.repayStatusStr = repayStatusStr;
+    }
+
+    public Date getStartLoanTime() {
+        return startLoanTime;
+    }
+
+    public void setStartLoanTime(Date startLoanTime) {
+        this.startLoanTime = startLoanTime;
+    }
+
+    public Date getEndLoanTime() {
+        return endLoanTime;
+    }
+
+    public void setEndLoanTime(Date endLoanTime) {
+        this.endLoanTime = endLoanTime;
+    }
+
+    public String getStageNoStr() {
+        return stageNoStr;
+    }
+
+    public void setStageNoStr(String stageNoStr) {
+        this.stageNoStr = stageNoStr;
+    }
 }

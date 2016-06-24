@@ -1,129 +1,114 @@
 package com.baidu.fbu.asset.util;
 
-/** data 2016-1 */
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletResponse;
+/**
+ * data 2016-1
+ */
 
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.format.Colour;
 import jxl.format.UnderlineStyle;
-import jxl.write.Label;
-import jxl.write.WritableCellFormat;
-import jxl.write.WritableFont;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
+import jxl.write.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import javax.servlet.http.HttpServletResponse;
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.util.*;
+
 public class IOUtil {
+
     /** 往页面回写查询结果  */
-    public static void writeToPage( HttpServletResponse rep, Collection<Object> co ) {
+    public static void writeToPage(HttpServletResponse rep, Collection<Object> co) {
         try {
-            JSONArray jsonArr = JSONArray.fromObject( co );
-            rep.getWriter().print( jsonArr.toString() );
+            JSONArray jsonArr = JSONArray.fromObject(co);
+            rep.getWriter().print(jsonArr.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /** 往页面回写查询结果  */
-    public static void writeToPage( HttpServletResponse rep, Map<String, Object> map ) {
+    public static void writeToPage(HttpServletResponse rep, Map<String, Object> map) {
         try {
-            JSONObject jsonObj = JSONObject.fromObject( map );
-            rep.getWriter().print( jsonObj.toString() );
+            JSONObject jsonObj = JSONObject.fromObject(map);
+            rep.getWriter().print(jsonObj.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /** 往页面回写查询结果  */
-    public static void writeToPage( HttpServletResponse rep, String key, Object value ) {
+    public static void writeToPage(HttpServletResponse rep, String key, Object value) {
         try {
             JSONObject jsonObj = new JSONObject();
-            jsonObj.put( key, value );
-            rep.getWriter().print( jsonObj.toString() );
+            jsonObj.put(key, value);
+            rep.getWriter().print(jsonObj.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static String listToJsonStr( List<Object> list ) {
-        JSONArray jsonArr = JSONArray.fromObject( list );
-        return  jsonArr.toString();
+    public static String listToJsonStr(List<Object> list) {
+        JSONArray jsonArr = JSONArray.fromObject(list);
+        return jsonArr.toString();
     }
 
-    public static String objectToJsonStr( Object obj ) {
-        JSONObject json = JSONObject.fromObject( obj );
-        return  json.toString();
+    public static String objectToJsonStr(Object obj) {
+        JSONObject json = JSONObject.fromObject(obj);
+        return json.toString();
     }
 
     // jsonString 转换为 List。list里 存放的是一个一个 map
-    public static List<Object> jsonStringToList( String jsonString ) {
-        JSONArray jsonArr = JSONArray.fromObject( jsonString.trim() );
+    public static List<Object> jsonStringToList(String jsonString) {
+        JSONArray jsonArr = JSONArray.fromObject(jsonString.trim());
 
         List<Object> result = Util.getArrayList();
 
-        for ( Iterator<Object> it = jsonArr.iterator(); it.hasNext(); ) {
+        for (Iterator<Object> it = jsonArr.iterator(); it.hasNext(); ) {
             JSONObject obj = (JSONObject) it.next();
             Map<String, Object> map = Util.getHashMap();
 
-            for ( Iterator<Object> keys = obj.keys(); keys.hasNext(); ) {
+            for (Iterator<Object> keys = obj.keys(); keys.hasNext(); ) {
                 Object key = keys.next();
                 Object value = obj.get(key);
 
-                map.put( key.toString(), value );
+                map.put(key.toString(), value);
             }
-            result.add( map );
+            result.add(map);
         }
 
         return result;
     }
 
     // jsonString 转换为 List。list里 存放的是一个一个 k 类的 java bean
-    public static List<Object> jsonStringToList( String jsonString, Class<?> k ) {
-        JSONArray jsonArr = JSONArray.fromObject( jsonString.trim() );
+    public static List<Object> jsonStringToList(String jsonString, Class<?> k) {
+        JSONArray jsonArr = JSONArray.fromObject(jsonString.trim());
 
         List<Object> result = Util.getArrayList();
 
-        for ( Iterator<Object> it = jsonArr.iterator(); it.hasNext(); ) {
+        for (Iterator<Object> it = jsonArr.iterator(); it.hasNext(); ) {
             JSONObject jsonObj = (JSONObject) it.next();
             Map<String, Object> map = Util.getHashMap();
 
-            for ( Iterator<Object> keys = jsonObj.keys(); keys.hasNext(); ) {
+            for (Iterator<Object> keys = jsonObj.keys(); keys.hasNext(); ) {
                 Object key = keys.next();
                 Object value = jsonObj.get(key);
 
-                map.put( key.toString(), value );
+                map.put(key.toString(), value);
             }
 
             // 将 map 装换成 java bean
-            Object bean = mapToBean( map, k );
-            result.add( bean );
+            Object bean = mapToBean(map, k);
+            result.add(bean);
         }
         return result;
     }
@@ -132,7 +117,7 @@ public class IOUtil {
      *  map 包含属性值的 map
      *  type 要转化的类型
      */
-    public static Object mapToBean( Map<String, Object> map, Class<?> type ) {
+    public static Object mapToBean(Map<String, Object> map, Class<?> type) {
         BeanInfo beanInfo = null;
         Object obj = null;
 
@@ -175,7 +160,7 @@ public class IOUtil {
     }
 
     /** 遍历实体类，将所有的属性 添加到 map 里  包含父类的属性   */
-    public static Map<String, Object> beanToMap( Object obj ) {
+    public static Map<String, Object> beanToMap(Object obj) {
         Map<String, Object> resultMap = Util.getLinkedHashMap();
 
         try {
@@ -213,9 +198,9 @@ public class IOUtil {
                 value = method.invoke(obj);
 
                 if (value != null) {
-                    resultMap.put( name, value );
+                    resultMap.put(name, value);
                 } else {
-                    resultMap.put( name, null );
+                    resultMap.put(name, null);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -226,18 +211,18 @@ public class IOUtil {
 
 
     /** 导出 资产计划 相关的 资产明细 到 excel */
-    public static String exportExcel( String fileName, Map<String, Object> resultMap,
-                                                        LinkedHashMap<String, String> titleMap,
-                                                        Map<String, Object> formatterMap,
-                                                        HttpServletResponse response ) {
+    public static String exportExcel(String fileName, Map<String, Object> resultMap,
+                                     LinkedHashMap<String, String> titleMap,
+                                     Map<String, Object> formatterMap,
+                                     HttpServletResponse response) {
         try {
             String charset = "gb2312";
-            fileName = new String( fileName.getBytes( charset ), "ISO8859-1" );
+            fileName = new String(fileName.getBytes(charset), "ISO8859-1");
 
             response.reset();
-            response.setCharacterEncoding( charset );
-            response.setContentType("application/msexcel; charset=" + charset );
-            response.setHeader("Content-disposition", "attachment; filename=" + fileName );
+            response.setCharacterEncoding(charset);
+            response.setContentType("application/msexcel; charset=" + charset);
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName);
 
             OutputStream os = null;
             try {
@@ -248,59 +233,59 @@ public class IOUtil {
 
             // String fileName = "资产明细.xls";
             // os = new FileOutputStream("d:\\"+ fileName );
-            WritableWorkbook wwb = Workbook.createWorkbook( os );
+            WritableWorkbook wwb = Workbook.createWorkbook(os);
 
             // 设置标题
-            WritableSheet ws = wwb.createSheet( "title", 0 );
+            WritableSheet ws = wwb.createSheet("title", 0);
 
             // 设置列的宽度
-            ws.setColumnView(0, 10 );     // 行列 定义的数量      todo todo todo todo
-            ws.setColumnView(1, 10 );
-            ws.setColumnView(2, 20 );
-            ws.setColumnView(3, 20 );
-            ws.setColumnView(4, 20 );
-            ws.setColumnView(5, 20 );
-            ws.setColumnView(6, 20 );
-            ws.setColumnView(7, 20 );
-            ws.setColumnView(8, 20 );
+            ws.setColumnView(0, 10);     // 行列 定义的数量      todo todo todo todo
+            ws.setColumnView(1, 10);
+            ws.setColumnView(2, 20);
+            ws.setColumnView(3, 20);
+            ws.setColumnView(4, 20);
+            ws.setColumnView(5, 20);
+            ws.setColumnView(6, 20);
+            ws.setColumnView(7, 20);
+            ws.setColumnView(8, 20);
 
             // 设置列的高度
-            ws.setRowView( 0, 400 );
-            ws.setRowView( 1, 400 );
-            ws.setRowView( 2, 400 );
-            ws.setRowView( 3, 400 );
-            ws.setRowView( 4, 400 );
-            ws.setRowView( 5, 400 );
-            ws.setRowView( 6, 400 );
-            ws.setRowView( 7, 400 );
-            ws.setRowView( 8, 400 );
+            ws.setRowView(0, 400);
+            ws.setRowView(1, 400);
+            ws.setRowView(2, 400);
+            ws.setRowView(3, 400);
+            ws.setRowView(4, 400);
+            ws.setRowView(5, 400);
+            ws.setRowView(6, 400);
+            ws.setRowView(7, 400);
+            ws.setRowView(8, 400);
 
             // 设置颜色
-            WritableFont wfMerge = new WritableFont( WritableFont.ARIAL, 10, WritableFont.NO_BOLD,
-                    false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK );
-            WritableCellFormat wffMerge = new WritableCellFormat( wfMerge );
-            wffMerge.setBackground( Colour.AQUA );
+            WritableFont wfMerge = new WritableFont(WritableFont.ARIAL, 10, WritableFont.NO_BOLD,
+                    false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK);
+            WritableCellFormat wffMerge = new WritableCellFormat(wfMerge);
+            wffMerge.setBackground(Colour.AQUA);
             // BorderLineStyle边框
             wffMerge.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN, jxl.format.Colour.BLACK);
 
-            List<Object> titlesEng = new ArrayList<Object>(titleMap.keySet() );
+            List<Object> titlesEng = new ArrayList<Object>(titleMap.keySet());
             List<Object> titlesChn = new ArrayList<Object>(titleMap.values());  // 将 collection 转换成 list
 
             // excel 最顶上的一行
-            ws.addCell(new Label( 0, 0, "序号", wffMerge));
+            ws.addCell(new Label(0, 0, "序号", wffMerge));
 
             for (int i = 0; i < titlesChn.size(); i++) {
-                ws.addCell(new Label( i + 1, 0, titlesChn.get(i).toString(), wffMerge)); // 第0个格是 "序号"，所以，i + 1
+                ws.addCell(new Label(i + 1, 0, titlesChn.get(i).toString(), wffMerge)); // 第0个格是 "序号"，所以，i + 1
             }
 
             // 设置颜色
             // wf_merge = new WritableFont( WritableFont.ARIAL, 12, WritableFont.NO_BOLD,
-                                                                  // false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK );
-            wffMerge = new WritableCellFormat( wfMerge );
-            wffMerge.setBackground( Colour.WHITE  );
+            // false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK );
+            wffMerge = new WritableCellFormat(wfMerge);
+            wffMerge.setBackground(Colour.WHITE);
             // BorderLineStyle边框
             wffMerge.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN,
-                                                    jxl.format.Colour.BLACK );
+                    jxl.format.Colour.BLACK);
 
             int row = 1;   // 第0行是 excel 的表头，第一行开始是内容
 
@@ -316,7 +301,7 @@ public class IOUtil {
                 // Util.print("类名：" + obj.getClass().getName() );
                 Map<String, Object> map = beanToMap(obj);
 
-                for (int j = 0; j < titlesChn.size(); j++ ) {
+                for (int j = 0; j < titlesChn.size(); j++) {
                     int column = j;
                     String content = "";
 
@@ -341,7 +326,7 @@ public class IOUtil {
                         // Util.print( content );
                     }
 
-                    ws.addCell( new Label( column + 1, row, content, wffMerge ));  // 第0列是序号，所以，要写成 column+1
+                    ws.addCell(new Label(column + 1, row, content, wffMerge));  // 第0列是序号，所以，要写成 column+1
                 }
                 row++;
             }
@@ -361,7 +346,7 @@ public class IOUtil {
     }
 
     // 将上传的文件写到服务器上
-    public static void writeFileToServer( File file, String filePath, String fileName ) {
+    public static void writeFileToServer(File file, String filePath, String fileName) {
         try {
             // Util.print( file.length() );
             InputStream is = new FileInputStream(file);
@@ -369,7 +354,7 @@ public class IOUtil {
 
             int bytesRead = 0;
             byte[] buffer = new byte[5120];
-            while ( (bytesRead = is.read(buffer, 0, 5120)) != -1) {
+            while ((bytesRead = is.read(buffer, 0, 5120)) != -1) {
                 os.write(buffer, 0, bytesRead);   // 将文件写入服务器
             }
             os.close();
@@ -382,11 +367,11 @@ public class IOUtil {
     }
 
     // 读取 excel 文件
-    public static List<Object> readExcel( List<Object> columnsToRead, String filePath, String fileName ) {
+    public static List<Object> readExcel(List<Object> columnsToRead, String filePath, String fileName) {
         List<Object> resultList = null;
 
         try {
-            InputStream ips = new FileInputStream( filePath + fileName );
+            InputStream ips = new FileInputStream(filePath + fileName);
             Workbook rwb = Workbook.getWorkbook(ips);
             Sheet st = rwb.getSheet(0);
 
@@ -399,33 +384,33 @@ public class IOUtil {
                 // return "error"; // excel 格式或数据不正确 */
                 return null;
             } else {
-                for ( int row = 1;  row < st.getRows(); row++ ) {  // 第 0 行是表头   //
+                for (int row = 1; row < st.getRows(); row++) {  // 第 0 行是表头   //
                     // String name= st.getCell(0, i).getContents().trim();  // 第 0 列 是序号
 
-                    Map<String, Object> result = new HashMap<String, Object>( );
+                    Map<String, Object> result = new HashMap<String, Object>();
 
-                    for ( int column = 0;  column < columnsToRead.size(); column++ ) {
+                    for (int column = 0; column < columnsToRead.size(); column++) {
                         String content = st.getCell(column + 1, row).getContents().trim();
                         String key = columnsToRead.get(column).toString();
 
-                        Util.print( key + "----" + content);
+                        Util.print(key + "----" + content);
                         result.put(key, content);
                     }
 
-                    resultList.add( result );
+                    resultList.add(result);
                 }
 
                 ips.close();
                 rwb.close();
             }
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return resultList;
     }
 
     // 删除上传的文件
-    public static void deleteFile( String filePath, String fileName ) {
+    public static void deleteFile(String filePath, String fileName) {
         File delFile = new File(filePath, fileName);
 
         if (delFile.exists()) {
@@ -439,7 +424,7 @@ public class IOUtil {
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> tempMap = (Map<String, Object>) list.get(i);
 
-            for ( Iterator<Object> it = keyList.iterator(); it.hasNext(); ) {
+            for (Iterator<Object> it = keyList.iterator(); it.hasNext(); ) {
                 String key = it.next().toString();
                 Object obj = tempMap.get(key);
                 // if(!Util.isNullOrEmptyOrZero(obj)){
@@ -471,7 +456,7 @@ public class IOUtil {
         }
 
         Set<String> set = map.keySet();
-        for ( Iterator<String> it = set.iterator(); it.hasNext(); ) {
+        for (Iterator<String> it = set.iterator(); it.hasNext(); ) {
 
             String key = it.next().toString();
             BigDecimal value = (BigDecimal) map.get(key);
@@ -482,6 +467,6 @@ public class IOUtil {
         }
     }
 
-   // public static void main(String[] args) throws Exception {   }
+    // public static void main(String[] args) throws Exception {   }
 
 }

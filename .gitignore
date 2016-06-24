@@ -2,3 +2,8 @@
 .svn
 .DS_Store
 .iml
+target/apache-tomcat-maven-plugin/
+target/generated-sources/
+target/tomcat/webapps/
+target/tomcat/work/
+.svn/*

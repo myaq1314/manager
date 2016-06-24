@@ -1,23 +1,22 @@
 package com.baidu.fbu.asset.dao.impl;
 
+import com.baidu.fbu.asset.dao.AssetPlanDao;
+import com.baidu.fbu.asset.entity.AssetPlan;
+import com.baidu.fbu.asset.mapper.AssetPlanMapper;
+import org.springframework.stereotype.Repository;
+
+import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Repository;
-
-import com.baidu.fbu.asset.dao.AssetPlanDao;
-import com.baidu.fbu.asset.entity.AssetPlan;
-import com.baidu.fbu.asset.mapper.AssetPlanMapper;
-
 @Repository
 public class AssetPlanDaoImpl implements AssetPlanDao {
+
     @Resource
     private AssetPlanMapper assetPlanMapper;
 
-    public void addByParam( AssetPlan assetPlan ) throws SQLException {
+    public void addByParam(AssetPlan assetPlan) throws SQLException {
         assetPlanMapper.insertSelective(assetPlan);
     }
 
@@ -29,21 +28,21 @@ public class AssetPlanDaoImpl implements AssetPlanDao {
         assetPlanMapper.updateSelective(assetPlan);
     }
 
-    public void deleteById( Long id ) throws SQLException {
+    public void deleteById(Long id) throws SQLException {
         assetPlanMapper.deleteByPrimaryKey(id);
     }
 
-    public AssetPlan findById( Long id ) throws SQLException {
-        return (AssetPlan) assetPlanMapper.selectByPrimaryKey(id);
+    public AssetPlan findById(Long id) throws SQLException {
+        return assetPlanMapper.selectByPrimaryKey(id);
     }
 
-    public List<AssetPlan> findByAssetManageId( Long amId ) throws SQLException {
+    public List<AssetPlan> findByAssetManageId(Long amId) throws SQLException {
         List<AssetPlan> assetPlanList = assetPlanMapper.selectByManagerId(amId);
         return assetPlanList;
     }
 
     public long countByParam(AssetPlan assetPlan) {
-        return assetPlanMapper.countSelective( assetPlan );
+        return assetPlanMapper.countSelective(assetPlan);
     }
 
     public List<Object> findByParam(Map<String, Object> map) {
@@ -51,7 +50,7 @@ public class AssetPlanDaoImpl implements AssetPlanDao {
     }
 
     public long joinCountByParam(AssetPlan assetPlan) {
-        return assetPlanMapper.joinCountSelective( assetPlan );
+        return assetPlanMapper.joinCountSelective(assetPlan);
     }
 
     public List<Object> joinFindByParam(Map<String, Object> map) {
@@ -59,7 +58,7 @@ public class AssetPlanDaoImpl implements AssetPlanDao {
     }
 
     public void batchUpdateByParam(Map<String, Object> map) {
-        assetPlanMapper.batchUpdateByParam( map );
+        assetPlanMapper.batchUpdateByParam(map);
     }
 
     public List<Object> findIdAndNameOfAssetManager() {

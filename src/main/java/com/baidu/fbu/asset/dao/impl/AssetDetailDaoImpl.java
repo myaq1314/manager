@@ -1,46 +1,42 @@
 package com.baidu.fbu.asset.dao.impl;
 
+import com.baidu.fbu.asset.dao.AssetDetailDao;
+import com.baidu.fbu.asset.entity.vo.AssetDetailVo;
+import com.baidu.fbu.asset.mapper.AssetDetailMapper;
+import org.springframework.stereotype.Repository;
+
+import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Repository;
-
-import com.baidu.fbu.asset.dao.AssetDetailDao;
-import com.baidu.fbu.asset.entity.AssetDetail;
-import com.baidu.fbu.asset.entity.vo.AssetDetailVo;
-import com.baidu.fbu.asset.mapper.AssetDetailMapper;
-
 @Repository
 public class AssetDetailDaoImpl implements AssetDetailDao {
+
     @Resource
     private AssetDetailMapper assetDetailMapper;
 
-    public void addByParam( AssetDetail assetDetail ) throws SQLException {
+    public void addByParam(AssetDetailVo assetDetail) throws SQLException {
         assetDetailMapper.insertSelective(assetDetail);
     }
 
-    public void updateByParam(AssetDetail assetDetail) throws SQLException {
+    public void updateByParam(AssetDetailVo assetDetail) throws SQLException {
         assetDetailMapper.updateSelective(assetDetail);
     }
 
-    public void deleteById( Long id ) throws SQLException {
+    public void deleteById(Long id) throws SQLException {
         assetDetailMapper.deleteByPrimaryKey(id);
     }
 
-    public AssetDetail findById( Long id) throws SQLException {
-        return (AssetDetail) assetDetailMapper.selectByPrimaryKey(id);
+    public AssetDetailVo findById(Long id) throws SQLException {
+        return assetDetailMapper.selectByPrimaryKey(id);
     }
 
     public long countByParam(Map<String, Object> map) {
-        // return assetDetailMapper.countSelective( map );
         return assetDetailMapper.joinCountSelective(map);
     }
 
     public List<Object> findByParam(Map<String, Object> map) {
-        // return assetDetailMapper.selectSelective(map);
         return assetDetailMapper.joinSelectSelective(map);
     }
 
@@ -65,7 +61,7 @@ public class AssetDetailDaoImpl implements AssetDetailDao {
         assetDetailMapper.batchUpdateByLoanIds(map);
     }
 
-    public List<AssetDetailVo> exportAssets(AssetDetail assetDetail) {
+    public List<AssetDetailVo> exportAssets(AssetDetailVo assetDetail) {
         return assetDetailMapper.exportAssets(assetDetail);
     }
 

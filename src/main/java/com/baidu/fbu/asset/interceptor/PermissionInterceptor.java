@@ -3,16 +3,12 @@
  */
 package com.baidu.fbu.asset.interceptor;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.baidu.fbu.asset.constants.Constants.Base;
+import com.baidu.fbu.common.model.ResultError;
+import com.baidu.fbu.common.service.FormatService;
+import com.baidu.fbu.common.util.DigestUtil;
+import com.baidu.fbu.common.util.RemoteUtil;
 import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,18 +20,23 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.baidu.fbu.asset.constants.Constants.Base;
-import com.baidu.fbu.common.model.ResultError;
-import com.baidu.fbu.common.service.FormatService;
-import com.baidu.fbu.common.util.DigestUtil;
-import com.baidu.fbu.common.util.RemoteUtil;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 权限拦截器
+ *
  * @author
  */
 public class PermissionInterceptor implements HandlerInterceptor {
-    /** log */
+
+    /**
+     * log
+     */
     private static final Logger LOG = LoggerFactory.getLogger(PermissionInterceptor.class);
 
     @Autowired
@@ -236,9 +237,9 @@ public class PermissionInterceptor implements HandlerInterceptor {
     /**
      * 错误处理
      *
-     * @param response 响应
+     * @param response  响应
      * @param errorCode 错误号
-     * @param errorMsg 错误信息
+     * @param errorMsg  错误信息
      */
     private void fail(HttpServletRequest request, HttpServletResponse response, int errorCode, String errorMsg) {
         try {

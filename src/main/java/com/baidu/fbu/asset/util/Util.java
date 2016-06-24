@@ -1,38 +1,21 @@
 package com.baidu.fbu.asset.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import net.sf.json.JSONObject;
+
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
-
-import net.sf.json.JSONObject;
 
 // +"-"+
 // for( Iterator<Object> it = list.iterator(); it.hasNext(); ){ it.next(); }
 // for( int i = 0; i < arr.length; i++ ) { }
 public class Util {
+
     public static void print() {
         System.out.println();
     }
@@ -55,7 +38,7 @@ public class Util {
             Map<String, Object> map = (Map<String, Object>) it.next();
 
             Set<String> key = map.keySet();
-            for (Iterator<String> ite = key.iterator(); ite.hasNext();) {
+            for (Iterator<String> ite = key.iterator(); ite.hasNext(); ) {
                 String str = (String) ite.next();
                 System.out.print(str + " : " + map.get(str) + "  ");
             }
@@ -78,7 +61,7 @@ public class Util {
     }
 
     public static void printListMap(List<Object> list) { // list 里放的是一个一个 Map
-        for( Iterator<Object> it = list.iterator(); it.hasNext(); ){
+        for (Iterator<Object> it = list.iterator(); it.hasNext(); ) {
             Map<String, Object> map = (Map<String, Object>) it.next();
             printMap(map);
         }
@@ -86,7 +69,7 @@ public class Util {
 
     public static void printMap(Map<String, Object> map) {
         Set<String> keys = map.keySet();
-        for (Iterator<String> it = keys.iterator(); it.hasNext();) {
+        for (Iterator<String> it = keys.iterator(); it.hasNext(); ) {
             String key = (String) it.next();
             print(key + " : " + map.get(key) + "\t");
         }
@@ -131,7 +114,7 @@ public class Util {
         return new TreeSet<Object>();
     }
 
-    public static HashSet< Object> getHashSet() {
+    public static HashSet<Object> getHashSet() {
         return new HashSet<Object>();
     }
 
@@ -140,9 +123,11 @@ public class Util {
     /* Map map3 = copyMap( map1 ); print( map1.equals( map3 ) );*/
     public static HashMap<String, Object> copyMap(Map<String, Object> map) {
         return new HashMap<String, Object>(map);
-   }
+    }
 
-    /** 复制集合 */
+    /**
+     * 复制集合
+     */
     public static List<Object> copyList(List<Object> list) {
         // return getPartOfAList( list, 0, list.size()-1 );
         List<Object> result = Util.getArrayList();
@@ -230,50 +215,54 @@ public class Util {
         }
     }
 
-    /** 获得当前的时间戳，返回字符串 */
+    /**
+     * 获得当前的时间戳，返回字符串
+     */
     public static String getStringTime() {
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return fmt.format(new Date());
     }
 
-    /** 遍历实体类的属性和数据类型以及属性值 */
-    public static void reflectTest( Object model ) throws NoSuchMethodException, IllegalAccessException,
+    /**
+     * 遍历实体类的属性和数据类型以及属性值
+     */
+    public static void reflectTest(Object model) throws NoSuchMethodException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException {
-        print("类名：" + model.getClass().getName() );
+        print("类名：" + model.getClass().getName());
         // 获取实体类的所有属性，返回 Field 数组
         Field[] field = model.getClass().getDeclaredFields();
 
         // 遍历所有属性
-        for(int j = 0; j < field.length; j++){
+        for (int j = 0; j < field.length; j++) {
             String name = field[j].getName();  // 获取属性的名字
             print("属性：" + name);
 
             String type = field[j].getGenericType().toString();  // 获取属性的类型
 
-            if(type.equals("class java.lang.String") ){
+            if (type.equals("class java.lang.String")) {
                 print("类型：String");
-            }else if(type.equals("class java.util.Date") ){
+            } else if (type.equals("class java.util.Date")) {
                 print("类型：Date");
-            }else if(type.equals("class java.lang.Integer") || type.equals("int") ){
+            } else if (type.equals("class java.lang.Integer") || type.equals("int")) {
                 print("类型：Integer or int");
-            }else if(type.equals("class java.lang.Short") || type.equals("short") ){
+            } else if (type.equals("class java.lang.Short") || type.equals("short")) {
                 print("类型：Short or short");
-            }else if( type.equals("class java.lang.Byte") || type.equals("byte") ){
+            } else if (type.equals("class java.lang.Byte") || type.equals("byte")) {
                 print("类型：Byte or byte ");
-            }else if(type.equals("class java.lang.Long") || type.equals("long") ){
+            } else if (type.equals("class java.lang.Long") || type.equals("long")) {
                 print("类型：Long or long");
-            }else if( type.equals("class java.lang.Character") || type.equals("char") ){
+            } else if (type.equals("class java.lang.Character") || type.equals("char")) {
                 print("类型：Character or char");
-            }else if(type.equals("class java.lang.Float") || type.equals("float") ){
+            } else if (type.equals("class java.lang.Float") || type.equals("float")) {
                 print("类型：Float or float");
-            }else if( type.equals("class java.lang.Double") || type.equals("double") ){
+            } else if (type.equals("class java.lang.Double") || type.equals("double")) {
                 print("类型：Double or double");
-            }else if (type.equals("class java.lang.Boolean") || type.equals("boolean") ) {
+            } else if (type.equals("class java.lang.Boolean") || type.equals("boolean")) {
                 print("类型：Boolean or boolean");
             }
 
             Method m = model.getClass().getMethod(   // 调用 getter 方法获取属性值
-                    "get" + name.substring(0, 1).toUpperCase() + name.substring(1) );
+                    "get" + name.substring(0, 1).toUpperCase() + name.substring(1));
 
             Object value = m.invoke(model);
 
@@ -286,28 +275,28 @@ public class Util {
         }
     }
 
-    public static List<Object> arrayToList( Object arr ){
-        return Arrays.asList( arr );
+    public static List<Object> arrayToList(Object arr) {
+        return Arrays.asList(arr);
     }
 
-    public static Object[] listToArray( List<Object> list ){
+    public static Object[] listToArray(List<Object> list) {
         return list.toArray();
     }
 
     // input a string of ids like "1,2,3,4", return a list containing ids of integer format
-    public static List<Object> idsStringToList( String idsString ) {
+    public static List<Object> idsStringToList(String idsString) {
         String[] idArray;
 
-        if( idsString.equals("") || idsString == null ){
+        if (idsString.equals("") || idsString == null) {
             idArray = new String[0];
-        }else{
+        } else {
             idArray = idsString.split(",");    // 分割  id 字符串  "id1,id2,id3"
         }
 
         List<Object> idList = Util.getArrayList();
 
-        for( int i = 0; i<idArray.length; i++ ){
-            idList.add( idArray[i] );
+        for (int i = 0; i < idArray.length; i++) {
+            idList.add(idArray[i]);
         }
 
         if (!Util.isNullOrEmptyOrZero(idList)) {
@@ -318,13 +307,13 @@ public class Util {
     }
 
     //
-    public static JSONObject jsonStringToJsonObject( String jsonString ){
-        return JSONObject.fromObject( jsonString );
+    public static JSONObject jsonStringToJsonObject(String jsonString) {
+        return JSONObject.fromObject(jsonString);
     }
 
 
-/////////////// snippet //////////////
-    public static void join2Maps( ){
+    /////////////// snippet //////////////
+    public static void join2Maps() {
         Map<String, Object> map1 = Util.getHashMap();
         Map<String, Object> map2 = Util.getHashMap();
         map1.put("1", 1);
@@ -332,19 +321,19 @@ public class Util {
         map2.put("2", 22);
         map2.put("3", 3);
 
-        map1.putAll( map2 );   // 合并两个 map  覆盖相同的 key
-        print( map1 );
+        map1.putAll(map2);   // 合并两个 map  覆盖相同的 key
+        print(map1);
     }
 
 
-    public static Map<String, Object> getOperateFee( String fullCutLimit ) {
+    public static Map<String, Object> getOperateFee(String fullCutLimit) {
         Map<String, Object> result = new HashMap<String, Object>();
-        JSONObject jObj = JSONObject.fromObject( fullCutLimit );
+        JSONObject jObj = JSONObject.fromObject(fullCutLimit);
 
-        for( Object object : jObj.entrySet() ){
-            Entry<String, Object> entry = (Entry<String, Object>)object;
-            String key = (String)entry.getKey();
-            String value = (String)entry.getValue();
+        for (Object object : jObj.entrySet()) {
+            Entry<String, Object> entry = (Entry<String, Object>) object;
+            String key = (String) entry.getKey();
+            String value = (String) entry.getValue();
 
             String[] keyArr = key.split("-");
             String[] valueArr = value.split("-");
@@ -356,34 +345,34 @@ public class Util {
             String key2 = "full";       // 支付满减
             String operation = "cut";   // 减
 
-            if( keyArr[0].equals( key1.toLowerCase() ) && valueArr[0].equals( operation.toLowerCase() )){
-                result.put( keyArr[0], valueArr[1] );
-            }else if( keyArr[0].equals( key2.toLowerCase() ) && valueArr[0].equals( operation.toLowerCase() )){
-                result.put( keyArr[0], valueArr[1] );
+            if (keyArr[0].equals(key1.toLowerCase()) && valueArr[0].equals(operation.toLowerCase())) {
+                result.put(keyArr[0], valueArr[1]);
+            } else if (keyArr[0].equals(key2.toLowerCase()) && valueArr[0].equals(operation.toLowerCase())) {
+                result.put(keyArr[0], valueArr[1]);
             }
         }
         //JsonUtil.print( result );
         return result;
     }
 
-    public static int jsonToMapTest( ){
+    public static int jsonToMapTest() {
         int strategyType = 2;    // 1:支付立减    2:支付满减     3:红包    4:支付折扣
         String fullCutLimit = "{\"immediate-0\":\"cut-3\",\"full-100\":\"cut-5\"}";  //存储 json 字符串
 
-        Map<String, Object> fee = getOperateFee( fullCutLimit );
+        Map<String, Object> fee = getOperateFee(fullCutLimit);
 
         String key1 = "immediate";
         String key2 = "full";
 
         int operateFee = 0;
 
-        if( strategyType == 1 ){  // 1:支付立减
-            operateFee = Integer.parseInt( fee.get( key1 ).toString() );
-        }else if( strategyType == 2 ){   // 2:支付满减
-            operateFee = Integer.parseInt(  fee.get( key2 ).toString() );
+        if (strategyType == 1) {  // 1:支付立减
+            operateFee = Integer.parseInt(fee.get(key1).toString());
+        } else if (strategyType == 2) {   // 2:支付满减
+            operateFee = Integer.parseInt(fee.get(key2).toString());
         }
 
-        print( operateFee );
+        print(operateFee);
 
         return operateFee;
 
@@ -392,16 +381,16 @@ public class Util {
     // 获得当前的时间字符串 Date
     public static String getDateStringOfToday() {
         Date today = new Date();
-        SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd" );
-        return df.format( today );
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(today);
     }
 
     public static String formatDateTime(Date date) {
         if (date == null) {
             return "";
         } else {
-            SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
-            return df.format( date );
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return df.format(date);
         }
     }
 
@@ -409,13 +398,13 @@ public class Util {
         if (date == null) {
             return "";
         } else {
-            SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd" );
-            return df.format( date );
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            return df.format(date);
         }
     }
 
     // 生成随机字符串的长度
-    public static String getRandomString( int length ) {    // length 表示生成字符串的长度
+    public static String getRandomString(int length) {    // length 表示生成字符串的长度
         String base = "abcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
         StringBuffer sbf = new StringBuffer();
@@ -424,10 +413,10 @@ public class Util {
             sbf.append(base.charAt(number));
         }
         return sbf.toString();
-     }
+    }
 
 
-///////////////////////////////
+    ///////////////////////////////
     public static void main(String[] args) throws Exception {
 /*        Map map1 = Util.getHashMap();
         Map map2 = Util.getHashMap();
@@ -444,7 +433,7 @@ public class Util {
         String str = "{ \"userName\":\"jw\",  \"age\":20 }";
         Util.print( Util.jsonStringToJsonObject( str ) );      */
 
-      //  jsonToMapTest( );
+        //  jsonToMapTest( );
 
      /*   List list = null;
         list.size();   //  java.lang.NullPointerException
