@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/fpu/!svn/ver/35359/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/entity
+END
+Customer.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/fpu/!svn/ver/33895/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/entity/Customer.java
+END
+Merchant.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/fpu/!svn/ver/33895/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/entity/Merchant.java
+END
+AssetDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/fpu/!svn/ver/35359/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/entity/AssetDetail.java
+END
+Corp.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/fpu/!svn/ver/33895/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/entity/Corp.java
+END
+AssetStageDetail.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/fpu/!svn/ver/33895/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/entity/AssetStageDetail.java
+END
+AssetManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/fpu/!svn/ver/33895/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/entity/AssetManager.java
+END
+AssetPlan.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/fpu/!svn/ver/33963/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/entity/AssetPlan.java
+END

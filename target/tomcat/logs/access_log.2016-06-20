@@ -1,0 +1,4 @@
+0:0:0:0:0:0:0:1%0 - - [20/Jun/2016:12:51:13 +0800] "GET / HTTP/1.1" 200 727 http-bio-8089-exec-1 99
+0:0:0:0:0:0:0:1%0 - - [20/Jun/2016:12:51:13 +0800] "GET /js/jquery-1.11.1.min.js HTTP/1.1" 200 95786 http-bio-8089-exec-5 26
+0:0:0:0:0:0:0:1%0 - - [20/Jun/2016:12:51:15 +0800] "GET /assetDetail/addAllAssetDetailToAssetPlan HTTP/1.1" 500 14629 http-bio-8089-exec-6 304
+0:0:0:0:0:0:0:1%0 - - [20/Jun/2016:13:01:31 +0800] "GET /assetDetail/addAllAssetDetailToAssetPlan HTTP/1.1" 500 14208 http-bio-8089-exec-1 353

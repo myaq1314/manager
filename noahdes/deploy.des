@@ -1,0 +1,25 @@
+# 描述需要上线的服务单元分组，按顺序描述。
+# 格式：- 服务单元的路径全名:分组名
+# 该实例描述的是：服务单元间串行执行
+# 服务单无内的机器串行执行，第1台执行完暂停，部署路径:/home/work/workdir/apps/datacenter
+ 
+GroupList:
+    - BAIDU_NBG_FBU_FPU_asset_asset-web.FPU.cp01:default
+ 
+# {1, 0} 分别表示分组间串行和并行上线
+GroupConcurrencyNum: 1
+ 
+#以下是每个分组的上线配置
+BAIDU_NBG_FBU_FPU_asset_asset-web.FPU.cp01:default:
+ 
+    #分组内机器执行的并发度，0为全并发，1为串行，n为并发数，默认值为1，即串行
+    ServerConcurrencyNum: 1
+ 
+    #暂停点，表示分组内第几台机器暂停，如有多处暂停分号分隔。若N>总机器数则忽略，默认值为1，即第1台执行完后暂停。若为0表示不暂停。
+    PausePoint: 0
+ 
+    #部署路径
+    DeployPath: /home/work/asset/
+ 
+    #执行帐号
+    User: work

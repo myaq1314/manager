@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/fpu/!svn/ver/35102/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/mapper
+END
+AssetManagerMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/fpu/!svn/ver/33895/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/mapper/AssetManagerMapper.java
+END
+AssetPlanMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/fpu/!svn/ver/33963/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/mapper/AssetPlanMapper.java
+END
+AssetDetailMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/fpu/!svn/ver/35102/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/mapper/AssetDetailMapper.java
+END
+AssetStageDetailMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/fpu/!svn/ver/33895/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/mapper/AssetStageDetailMapper.java
+END

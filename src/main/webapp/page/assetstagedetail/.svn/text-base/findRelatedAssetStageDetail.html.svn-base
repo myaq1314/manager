@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script type="text/javascript" src="../../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../../js/utilJs.js"></script>
+<link rel="stylesheet" href = "../../css/table.css">
+<link rel="stylesheet" href = "../../css/public.css">
+
+<script type="text/javascript">
+$(function () {
+    // 设置页面的标题
+    document.title = '资产的分期明细';
+
+    // 获取传递到页面的关联参数
+    var str = window.location + '';
+    var arr = str.split('?');
+    var args = arr[1];         // msg( arr[1] );
+    var parameter = args.split('&');
+
+    var str1 = parameter[0].split('id=');
+    var str2 = parameter[1].split('loanId=');
+
+    jsGet("id").value = str1[1];             // msg( str1[1] );
+    jsGet("loanId").value = str2[1];    // msg( str2[1] );
+    ajaxSubmitOfFindRelatedAssetStageDetail();      // 提交条件查询
+});
+
+// 分页查询翻到某一页。  whichPage 表示翻到第几页
+function goToPage(whichPage) {
+    var submitFunctionNameStr = 'ajaxSubmitOfFindRelatedAssetStageDetail';
+    setupPagerAndSubmit(whichPage, submitFunctionNameStr);
+}
+
+//提交条件查询
+function findRelatedAssetStageDetail() {
+    ajaxSubmitOfFindRelatedAssetStageDetail();
+}
+
+// 提交分页的条件查询，查询条件就是 searchForm 中输入的参数
+function ajaxSubmitOfFindRelatedAssetStageDetail(isPagerSearch) {
+    var url = '/assetStageDetail/findAssetStageDetail';
+    var param = serializeForm("searchForm");      // printObject( param );
+
+    // 如果是分页查询，需要加上分页参数
+    if (isPagerSearch == true){
+        put(param, "page", jqGet("page").val());
+        put(param, "pageSize", jqGet("pageSize").val());
+    }
+
+    var callbackFunctionName = "successCallbackOfFindRelatedAssetStageDetail";
+    theAjaxSubmit(url, param, callbackFunctionName);
+}
+
+// 提交条件查询 成功的回调函数
+function successCallbackOfFindRelatedAssetStageDetail(obj){    // printObject( obj );
+    if(obj.message == "success") {
+        if (obj.count == 0) {
+            jqGet("resultlist").html("没查询到资产分期明细");
+        } else {
+            // 列表的表头 参数
+            var listTitleParam = {};
+            put(listTitleParam, 'loanId', '借据号');
+            put(listTitleParam, 'stageNo', '分期期数');
+            put(listTitleParam, 'productType', '产品类型');
+            put(listTitleParam, 'ippDueDate', '分期还款日');
+            put(listTitleParam, 'repaymentDate', '实际还款日');
+            put(listTitleParam, 'repaymentStatus', '还款状态');
+            put(listTitleParam, 'amount', '当期应还金额');
+            put(listTitleParam, 'principal', '当期应还本金');
+            put(listTitleParam, 'pmtPrincipalAmt', '当期已还本金');
+            put(listTitleParam, 'cost', '当期应还费用');
+            put(listTitleParam, 'pmtFeeAmt', '当期已还费用');
+            put(listTitleParam, 'penalty', '罚息');
+            put(listTitleParam, 'repayPenalty', '已还罚息');
+
+            // 列表的格式化函数 的参数
+            var formatterParam = {};
+            put(formatterParam, 'ippDueDate', 'dateFormatter');
+            put(formatterParam, 'repaymentDate', 'dateFormatter');
+            put(formatterParam, 'repaymentStatus', 'repaymentStatusFormatter');
+            put(formatterParam, 'productType', 'productTypeFormatter');
+            put(formatterParam, 'transferStatus', 'transferStatusFormatter');
+
+            // 是否需要在列表左侧显示多选按钮列
+            var checkboxParam = {};
+            put(checkboxParam, "needCheckbox", false);
+
+            // 功能 那一列相关的参数
+            var opColumnParam = null;
+
+            var sumParam = {};
+            sumParam.needSn = true;   // 是否显示序号列
+            sumParam.count = obj.count;   // 总的查询结果数
+            sumParam.page = obj.page;     // 总的查询结果页数
+            sumParam.pageSize = obj.pageSize;   // 每页的行数
+            sumParam.howManyPages = obj.howManyPages;  // 一共有多少页
+
+            // 求和以及汇总 信息
+            var info = '';    // printObject( obj.info )
+            info += '<p class="tip">资产的转让状态：<span class="strip">'
+                + transferStatusFormatter(obj.info.transferStatus) + '</span></p>';
+            info += '<p class="tip">分期计划：<span class="strip">'
+                + nullFormatter(obj.info.howManyStage, 0) + '</span>期</p>';
+            sumParam.info = info;
+
+            var divId = "resultlist";
+
+            // 生成动态列表
+            generateTable(divId, obj.list, listTitleParam, formatterParam,
+                    checkboxParam, opColumnParam, sumParam);
+
+            // 设置 分页条，输入框和跳转按钮
+            setupPager(sumParam);
+        }
+    }
+}
+</script>
+</head>
+<body>
+<div class="tap">
+    <ul>
+        <li>
+            <a href="/">首页</a>
+        </li>
+        <li>
+            <a href="/page/assetplan/findAssetPlan.html">资产计划列表</a>
+        </li>
+    </ul>
+</div>
+<div class="tap-title"><font size="4">资产的分期明细</font></div>
+<form id="searchForm" method="post" class="form-table">
+    <input type="hidden" name="id"  id="id"><!--  id = 资产明细的 id  -->
+    <input type="hidden" name="loanId"  id="loanId"><!--  loanId = 资产明细的借据号 -->
+</form>
+<div id="resultlist"></div>
+<div class="buttons">
+    <input type="button" value="返回" onclick="returnToFormerPage()" class="button">
+</div>
+</body>
+</html>

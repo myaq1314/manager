@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/fpu/!svn/ver/34475/trunk/activty-service/asset/noahdes
+END
+deploy.des
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/fpu/!svn/ver/34465/trunk/activty-service/asset/noahdes/deploy.des
+END
+operation_list
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/fpu/!svn/ver/34475/trunk/activty-service/asset/noahdes/operation_list
+END
+serverlist.des
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/fpu/!svn/ver/34465/trunk/activty-service/asset/noahdes/serverlist.des
+END

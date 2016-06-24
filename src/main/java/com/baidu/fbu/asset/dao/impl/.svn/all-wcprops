@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/fpu/!svn/ver/35239/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/dao/impl
+END
+AssetManagerDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/fpu/!svn/ver/33895/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/dao/impl/AssetManagerDaoImpl.java
+END
+AssetPlanDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/fpu/!svn/ver/33963/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/dao/impl/AssetPlanDaoImpl.java
+END
+AssetDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/fpu/!svn/ver/35239/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/dao/impl/AssetDetailDaoImpl.java
+END
+AssetStageDetailDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/fpu/!svn/ver/33895/trunk/activty-service/asset/src/main/java/com/baidu/fbu/asset/dao/impl/AssetStageDetailDaoImpl.java
+END

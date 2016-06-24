@@ -1,0 +1,34 @@
+#!/bin/bash
+#set -x
+ 
+TOMCAT_NAME=tomcat
+TOMCAT_HOME=/home/work/local/
+USER=work
+WEBAPP_HOME=/home/work/asset/
+ 
+if [ "$1" = "start" ]; then
+    echo "replace online properties!"
+#    cp -rf $WEBAPP_HOME/WEB-INF/classes/release/* $WEBAPP_HOME/WEB-INF/classes/
+     
+        if ps -ef | grep $TOMCAT_NAME | grep $USER |grep -v grep|grep -v perl|grep -v 'sh -c'|grep -v bash > /dev/null 2>&1;then
+                echo "$TOMCAT_NAME has started! aborted!"
+                exit 0
+        fi
+        $TOMCAT_HOME/$TOMCAT_NAME/bin/startup.sh
+        for i in `seq 1 30` ;do printf "%d.." $i;sleep 1;done;echo
+echo "$TOMCAT_NAME started!";
+exit 0
+fi
+ 
+if [ "$1" = "stop" ]; then
+#   $BACK_HOME/backup.sh
+        if ps -ef | grep $TOMCAT_NAME | grep $USER |grep -v grep | grep -v perl |grep -v 'sh -c'|grep -v bash > /dev/null 2>&1;then
+                :
+        else
+                echo "$TOMCAT_NAME has stoped! aborted!"
+                exit 0
+        fi
+kill  `ps -ef | grep $TOMCAT_NAME | grep $USER |grep -v grep | grep -v perl |grep -v 'sh -c'|grep -v bash|awk '{print$2}'`
+echo "$TOMCAT_NAME stopped!";
+exit 0
+fi

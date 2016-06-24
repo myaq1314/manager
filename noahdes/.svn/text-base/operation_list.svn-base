@@ -1,0 +1,15 @@
+EPARE:
+    - EXECUTE_CMD:echo "start to execute"   #自定义命令
+    - BLOCK_MACHINE                         #屏蔽监控
+MAIN:
+    - DERIVE_CONF                           #配置派生
+    - DOWNLOAD_BIN                          #下载bin组件
+    - DOWNLOAD_DATA                         #下载data组件
+    - CALL_CONTROL:stop                     #停服务
+    - BACKUP_AND_DEPLOY:TRUE                #部署
+    - EXECUTE_CMD:cd /home/work/asset && unzip asset.war
+    - CALL_CONTROL:start                    #起服务
+END:
+    - UNBLOCK_MACHINE                       #解除屏蔽
+    - EXECUTE_CMD:echo "end of execute"     #自定义命令
+
